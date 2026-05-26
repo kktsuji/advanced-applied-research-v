@@ -191,9 +191,64 @@ def fig6_maturity_progression():
     print('Generated: maturity_progression.png')
 
 
+def fig9_cost_benefit():
+    """図9: 人件費削減額 vs AI投資額の対比（標準シナリオ）"""
+    labels = [
+        'Without AI\n(estimated)',
+        'With AI\n(human + AI cost)',
+        'AI investment\n(standard scenario)'
+    ]
+    # 単位: 万円
+    values = [9167, 2513, 13]
+    colors = ['#d32f2f', '#1976d2', '#f9a825']
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    bars = ax.barh(labels, values, color=colors, alpha=0.85,
+                   edgecolor='white', linewidth=1.5)
+
+    ax.set_xlabel('Cost (10,000 JPY)', fontsize=12)
+    ax.set_title('Figure 9: Human-Cost Reduction vs. AI Investment',
+                 fontsize=13, fontweight='bold')
+    ax.set_xlim(0, 10500)
+    ax.invert_yaxis()
+
+    # Value labels at the right end of each bar
+    annotations = [
+        ('91.67M JPY', '#d32f2f'),
+        ('25.13M JPY (incl. 0.13M AI)', '#1976d2'),
+        ('0.13M JPY', '#f9a825')
+    ]
+    for bar, (text, color) in zip(bars, annotations):
+        ax.annotate(text,
+                    xy=(bar.get_width(), bar.get_y() + bar.get_height() / 2),
+                    xytext=(8, 0), textcoords='offset points',
+                    va='center', fontsize=11, fontweight='bold', color=color)
+
+    # Highlight reduction
+    ax.annotate(
+        'Human-cost reduction: 66.54M JPY\nAI investment ratio: 0.14% of human cost',
+        xy=(5500, 2.4), xytext=(5500, 2.4),
+        fontsize=10, color='#333',
+        bbox=dict(boxstyle='round,pad=0.5',
+                  facecolor='#fffde7', edgecolor='#f9a825', linewidth=1.2)
+    )
+
+    # Reference vertical line at the With-AI total
+    ax.axvline(x=2513, color='#1976d2', linestyle='--',
+               linewidth=0.8, alpha=0.5)
+
+    ax.grid(axis='x', linestyle=':', alpha=0.4)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'cost_benefit.png'))
+    plt.close()
+    print('Generated: cost_benefit.png')
+
+
 if __name__ == '__main__':
     fig3_tool_positioning()
     fig4_phase_comparison()
     fig5_test_ratio()
     fig6_maturity_progression()
+    fig9_cost_benefit()
     print(f'\nAll figures saved to: {OUTPUT_DIR}')
