@@ -17,7 +17,7 @@ docker run --rm \
        --user $(id -u):$(id -g) \
        pandoc/japanese \
        docs/report.md \
-       -o out/report.pdf \
+       -o docs/report.pdf \
        --resource-path=docs \
        --pdf-engine=lualatex -V documentclass=ltjsarticle
 ```
