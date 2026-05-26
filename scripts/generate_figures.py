@@ -14,8 +14,63 @@ OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
-def fig3_phase_comparison():
-    """図3: フェーズ別工数比較（AI有/無）"""
+def fig3_tool_positioning():
+    """図3: 仕様駆動開発ツールの位置づけ（重厚さ × 仕様の生命性）"""
+    tools = ['Tessl', 'Kiro', 'spec-kit', 'OpenSpec']
+    x = [0.40, 0.35, 0.75, 0.55]
+    y = [0.85, 0.55, 0.30, 0.28]
+    colors = ['#7b1fa2', '#f57c00', '#1976d2', '#388e3c']
+    # Per-tool label offsets in points (dx, dy)
+    label_offsets = [(-45, 8), (12, 8), (12, 8), (12, 8)]
+
+    fig, ax = plt.subplots(figsize=(8, 7))
+
+    # Quadrant backgrounds
+    ax.fill_between([0.5, 1.0], 0.5, 1.0, color='#e3f2fd', alpha=0.35)
+    ax.fill_between([0, 0.5], 0.5, 1.0, color='#fff3e0', alpha=0.35)
+    ax.fill_between([0, 0.5], 0, 0.5, color='#f3e5f5', alpha=0.35)
+    ax.fill_between([0.5, 1.0], 0, 0.5, color='#e8f5e9', alpha=0.35)
+
+    # Quadrant dividing lines
+    ax.axhline(y=0.5, color='#9e9e9e', linewidth=1)
+    ax.axvline(x=0.5, color='#9e9e9e', linewidth=1)
+
+    # Quadrant labels (corners)
+    ax.text(0.97, 0.97, 'Heavy & Synced', ha='right', va='top',
+            fontsize=10, color='#555', style='italic')
+    ax.text(0.03, 0.97, 'Light & Synced', ha='left', va='top',
+            fontsize=10, color='#555', style='italic')
+    ax.text(0.03, 0.03, 'Light & Static', ha='left', va='bottom',
+            fontsize=10, color='#555', style='italic')
+    ax.text(0.97, 0.03, 'Heavy & Static', ha='right', va='bottom',
+            fontsize=10, color='#555', style='italic')
+
+    # Plot points and labels
+    for tool, xi, yi, color, offset in zip(tools, x, y, colors, label_offsets):
+        ax.scatter(xi, yi, s=400, color=color, alpha=0.85,
+                   edgecolor='white', linewidth=2, zorder=3)
+        ax.annotate(tool, (xi, yi), xytext=offset,
+                    textcoords='offset points',
+                    fontsize=12, fontweight='bold', color=color)
+
+    ax.set_xlabel('Process: Lightweight  -->  Heavy', fontsize=12)
+    ax.set_ylabel('Spec: Static  -->  Living', fontsize=12)
+    ax.set_title('Figure 3: Positioning of Spec-Driven Development Tools',
+                 fontsize=13, fontweight='bold')
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_xticks([0, 0.25, 0.5, 0.75, 1.0])
+    ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
+    ax.set_aspect('equal')
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'tool_positioning.png'))
+    plt.close()
+    print('Generated: tool_positioning.png')
+
+
+def fig4_phase_comparison():
+    """図4: フェーズ別工数比較（AI有/無）"""
     phases = [
         'Tech\nLearning',
         'Requirements',
@@ -35,7 +90,7 @@ def fig3_phase_comparison():
     bars2 = ax.bar(x + width/2, with_ai, width, label='With AI (actual)', color='#1976d2', alpha=0.8)
 
     ax.set_ylabel('Person-months', fontsize=12)
-    ax.set_title('Figure 3: Phase-wise Effort Comparison (With/Without AI)', fontsize=13, fontweight='bold')
+    ax.set_title('Figure 4: Phase-wise Effort Comparison (With/Without AI)', fontsize=13, fontweight='bold')
     ax.set_xticks(x)
     ax.set_xticklabels(phases, fontsize=10)
     ax.legend(fontsize=11)
@@ -65,8 +120,8 @@ def fig3_phase_comparison():
     print('Generated: phase_comparison.png')
 
 
-def fig4_test_ratio():
-    """図4: テスト対コード比の業界比較"""
+def fig5_test_ratio():
+    """図5: テスト対コード比の業界比較"""
     categories = [
         'Enterprise\n(average)',
         'Quality-focused\nprojects',
@@ -80,7 +135,7 @@ def fig4_test_ratio():
     bars = ax.bar(categories, ratios, color=colors, alpha=0.85, edgecolor='white', linewidth=1.5)
 
     ax.set_ylabel('Test-to-Code Ratio', fontsize=12)
-    ax.set_title('Figure 4: Test-to-Code Ratio - Industry Comparison', fontsize=13, fontweight='bold')
+    ax.set_title('Figure 5: Test-to-Code Ratio - Industry Comparison', fontsize=13, fontweight='bold')
     ax.set_ylim(0, 2.0)
     ax.axhline(y=1.0, color='#e0e0e0', linestyle='--', linewidth=1)
     ax.text(3.5, 1.02, 'test lines = production lines', fontsize=8, color='gray')
@@ -95,8 +150,8 @@ def fig4_test_ratio():
     print('Generated: test_ratio_comparison.png')
 
 
-def fig5_maturity_progression():
-    """図5: プロセス成熟度の変化（仕様量の推移）"""
+def fig6_maturity_progression():
+    """図6: プロセス成熟度の変化（仕様量の推移）"""
     features = ['no01', 'no02', 'no03', 'no04', 'no05', 'no06',
                 'no07', 'no08/09', 'no10', 'no11', 'no12']
     spec_lines = [17868, 11372, 2491, 4379, 6151, 2499,
@@ -122,7 +177,7 @@ def fig5_maturity_progression():
     ax2.set_ylim(0, 1.6)
     ax2.axhline(y=1.0, color=color2, linestyle='--', linewidth=0.8, alpha=0.5)
 
-    ax1.set_title('Figure 5: Process Maturity - Spec Volume vs Code Quality', fontsize=13, fontweight='bold')
+    ax1.set_title('Figure 6: Process Maturity - Spec Volume vs Code Quality', fontsize=13, fontweight='bold')
 
     # Annotations
     ax1.annotate('Early: detailed exploration', xy=(0, 17868), xytext=(2, 16000),
@@ -137,7 +192,8 @@ def fig5_maturity_progression():
 
 
 if __name__ == '__main__':
-    fig3_phase_comparison()
-    fig4_test_ratio()
-    fig5_maturity_progression()
+    fig3_tool_positioning()
+    fig4_phase_comparison()
+    fig5_test_ratio()
+    fig6_maturity_progression()
     print(f'\nAll figures saved to: {OUTPUT_DIR}')

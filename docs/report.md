@@ -222,6 +222,40 @@ spec-kit は GitHub Copilot と統合され、以下のように機能する。
 - **Implement 段階**：仕様（spec.md）を入力としてAIがコードとテストを生成
 - **Report 段階**：実装結果とチェックリストの照合を支援
 
+### 5.6 他の仕様駆動開発ツールとの比較
+
+仕様駆動開発の領域では、spec-kit以外にも複数のフレームワーク・ツールが登場している。本節では代表的な3ツール（Kiro / Tessl / OpenSpec）とspec-kitを「**プロセスの重厚さ**」と「**仕様の生命性**（コードとの同期度合い）」の2軸で比較する。
+
+#### 主要ツールの概要
+
+| ツール       | 提供元 | 特徴                                                                                                                  |
+| ------------ | ------ | --------------------------------------------------------------------------------------------------------------------- |
+| **spec-kit** | GitHub | Constitution + 6段階ワークフロー（specify / clarify / plan / tasks / implement / report）。本プロジェクトで採用[3]    |
+| **Kiro**     | AWS    | 要求 → 設計 → タスクの3段階に集約。EARS記法による構造化受入条件で曖昧性を抑制[7]                                      |
+| **Tessl**    | Tessl  | `.tessl/` 配下のtileをMCP互換エージェントに注入。"GENERATED FROM SPEC"マーカー付与、ライブラリ仕様レジストリを併設[8] |
+| **OpenSpec** | OSS    | CLIベースで specify / plan / implement を踏襲。spec-kitに最も近い思想[9]                                              |
+
+#### 2軸での位置づけ
+
+![図3: 仕様駆動開発ツールの位置づけ](figs/tool_positioning.png)
+
+**図3: 仕様駆動開発ツールの位置づけ（重厚さ × 仕様の生命性）**
+
+#### 考察
+
+- **spec-kit**：Constitutionによる品質憲章を全機能に適用するため、プロセスは重厚な部類に入る。一方で仕様はコード生成の入力として機能するものの、生成後の自動同期はなく「静的仕様」に分類される。本プロジェクトでは品質担保の観点でこの重厚さが奏功した。
+- **Kiro**：要求・設計・タスクの3段階に絞ることで軽量に保ちつつ、EARS記法によって受入条件の精度を確保する。spec-kitと比較してセレモニーは少ないが、AWS統合が前提となる場面が多い。
+- **Tessl**：仕様変更時にコード側へ "GENERATED FROM SPEC" マーカーを付与し、仕様の生命性を最も強く担保する。MCP対応によりエディタ非依存。ライブラリ仕様レジストリにより、AIのAPIハルシネーションを構造的に抑制する点も特徴的。
+- **OpenSpec**：spec-kitと最も近い思想で、CLIワークフローも類似。spec-kitからの乗り換えコストが低く、OSSとしての改変自由度を求める場合の有力候補となる。
+
+#### 本プロジェクトでspec-kitを採用した理由
+
+- 三重苦（技術不慣れ・要求不確定・厳しい工数）の中で、Constitutionによる品質基準の明文化が**ばらつき抑制**に直結した（7.3節参照）
+- 仕様の静的性は欠点となり得るが、spec → plan → tasks → report のトレーサビリティが整っており、保守フェーズでの追跡にも十分機能した
+- GitHub Copilotとの統合により、未経験技術領域での実装支援が即座に得られた
+
+ただし、**仕様変更が頻繁に発生する保守フェーズ主体のプロジェクト**であれば、TesslやKiroなどLiving Spec志向のツールも有力な選択肢となる。ツール選定は「プロジェクトの性格（新規開発 vs 保守中心）」「チームのAIリテラシー」「既存技術スタックとの親和性」を踏まえて判断するのが望ましい。
+
 ## 第6章 プロジェクトでの効果（定量分析）
 
 ### 6.1 トータル工数削減効果
@@ -236,7 +270,7 @@ spec-kit は GitHub Copilot と統合され、以下のように機能する。
 | **削減率**           | –                   | **約73%**        |
 | **生産性倍率**       | –                   | **約3.7倍**      |
 
-![図3: フェーズ別工数比較](figs/phase_comparison.png)
+![図4: フェーズ別工数比較](figs/phase_comparison.png)
 
 **AI未使用時の工数見積根拠**[5]：
 
@@ -274,7 +308,7 @@ spec-kit は GitHub Copilot と統合され、以下のように機能する。
 | 仕様:コード比          | **4.2:1**            | –            | コード1行に4.2行の裏付け |
 | 品質チェックリスト適用 | **86%（19/22機能）** | –            | 高い網羅率               |
 
-![図4: テスト対コード比の業界比較](figs/test_ratio_comparison.png)
+![図5: テスト対コード比の業界比較](figs/test_ratio_comparison.png)
 
 **テスト対コード比 1.16:1 の意義**：
 
@@ -308,7 +342,7 @@ spec-kit は GitHub Copilot と統合され、以下のように機能する。
 - 5ヶ月でCMMI Level 3（定義されたプロセス）[6]相当に到達
 - 通常これには数年のプロセス改善努力が必要
 
-![図5: プロセス成熟度の変化](figs/maturity_progression.png)
+![図6: プロセス成熟度の変化](figs/maturity_progression.png)
 
 ## 第7章 課題と限界、およびその対策
 
@@ -343,7 +377,7 @@ flowchart LR
     end
 ```
 
-**図6: ばらつき抑制の仕組み**
+**図7: ばらつき抑制の仕組み**
 
 ### 7.2 その他の課題
 
@@ -415,7 +449,7 @@ flowchart TD
     end
 ```
 
-**図7: 仕様駆動開発による価値創出の全体像**
+**図8: 仕様駆動開発による価値創出の全体像**
 
 ## 第9章 今後の展望
 
@@ -451,5 +485,8 @@ flowchart TD
 4. Boehm, B.W., "Software Engineering Economics", Prentice-Hall, 1981（1:10:100の法則）
 5. McConnell, S., "Software Estimation: Demystifying the Black Art", Microsoft Press, 2006
 6. CMMI Institute, "CMMI for Development, Version 2.0", 2018
+7. AWS, "Kiro: AI IDE for Spec-Driven Development", https://kiro.dev
+8. Tessl, "Tessl Framework & Spec Registry", https://tessl.io
+9. OpenSpec, "OpenSpec: Spec-Driven Development CLI", https://github.com/Fission-AI/OpenSpec
 
 _本レポートは、筆者が参画した実プロジェクトのデータ（コード行数、コミット履歴、仕様ドキュメント量）に基づく定量分析である。AI未使用時の工数見積はIPA標準手法に基づき、COCOMOモデルでのクロスチェックにより妥当性を確認している。_
