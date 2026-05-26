@@ -1,4 +1,13 @@
-# AI仕様駆動開発で工数 73% 削減・人件費 6,667 万円圧縮 ― 22機能を5ヶ月で完遂
+\begin{center}
+{\LARGE \textbf{特別応用研究V\\AI仕様駆動開発で工数 73% 削減・人件費 6,667 万円圧縮 ― 22機能を5ヶ月で完遂}}
+\end{center}
+
+\begin{flushright}
+DATE\\
+UNIVERSITY 工学専攻 COURSEコース LAB研究室\\
+博士後期課程Y年 STUDENTNUMBER\\
+NAME
+\end{flushright}
 
 ## 第1章 はじめに
 
