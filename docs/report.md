@@ -1,5 +1,5 @@
 \begin{center}
-{\LARGE \textbf{特別応用研究V\\AI仕様駆動開発で工数 73% 削減・人件費 6,667 万円圧縮 ― 22機能を5ヶ月で完遂}}
+{\LARGE \textbf{特別応用研究V\\AI仕様駆動開発で工数 73\% 削減・人件費 6,667 万円圧縮 ― 22機能を5ヶ月で完遂}}
 \end{center}
 
 \begin{flushright}
