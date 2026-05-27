@@ -55,7 +55,7 @@ def fig3_tool_positioning():
 
     ax.set_xlabel('Process: Lightweight  -->  Heavy', fontsize=12)
     ax.set_ylabel('Spec: Static  -->  Living', fontsize=12)
-    ax.set_title('Figure 3: Positioning of Spec-Driven Development Tools',
+    ax.set_title('Positioning of Spec-Driven Development Tools',
                  fontsize=13, fontweight='bold')
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
@@ -90,7 +90,7 @@ def fig4_phase_comparison():
     bars2 = ax.bar(x + width/2, with_ai, width, label='With AI (actual)', color='#1976d2', alpha=0.8)
 
     ax.set_ylabel('Person-months', fontsize=12)
-    ax.set_title('Figure 4: Phase-wise Effort Comparison (With/Without AI)', fontsize=13, fontweight='bold')
+    ax.set_title('Phase-wise Effort Comparison (With/Without AI)', fontsize=13, fontweight='bold')
     ax.set_xticks(x)
     ax.set_xticklabels(phases, fontsize=10)
     ax.legend(fontsize=11)
@@ -135,7 +135,7 @@ def fig5_test_ratio():
     bars = ax.bar(categories, ratios, color=colors, alpha=0.85, edgecolor='white', linewidth=1.5)
 
     ax.set_ylabel('Test-to-Code Ratio', fontsize=12)
-    ax.set_title('Figure 5: Test-to-Code Ratio - Industry Comparison', fontsize=13, fontweight='bold')
+    ax.set_title('Test-to-Code Ratio - Industry Comparison', fontsize=13, fontweight='bold')
     ax.set_ylim(0, 2.0)
     ax.axhline(y=1.0, color='#e0e0e0', linestyle='--', linewidth=1)
     ax.text(3.5, 1.02, 'test lines = production lines', fontsize=8, color='gray')
@@ -177,7 +177,7 @@ def fig6_maturity_progression():
     ax2.set_ylim(0, 1.6)
     ax2.axhline(y=1.0, color=color2, linestyle='--', linewidth=0.8, alpha=0.5)
 
-    ax1.set_title('Figure 6: Process Maturity - Spec Volume vs Code Quality', fontsize=13, fontweight='bold')
+    ax1.set_title('Process Maturity - Spec Volume vs Code Quality', fontsize=13, fontweight='bold')
 
     # Annotations
     ax1.annotate('Early: detailed exploration', xy=(0, 17868), xytext=(2, 16000),
@@ -191,8 +191,8 @@ def fig6_maturity_progression():
     print('Generated: maturity_progression.png')
 
 
-def fig9_cost_benefit():
-    """図9: 人件費削減額 vs AI投資額の対比（標準シナリオ）"""
+def fig7_cost_benefit():
+    """図7: 人件費削減額 vs AI投資額の対比（標準シナリオ）"""
     labels = [
         'Without AI\n(estimated)',
         'With AI\n(human + AI cost)',
@@ -207,7 +207,7 @@ def fig9_cost_benefit():
                    edgecolor='white', linewidth=1.5)
 
     ax.set_xlabel('Cost (10,000 JPY)', fontsize=12)
-    ax.set_title('Figure 9: Human-Cost Reduction vs. AI Investment',
+    ax.set_title('Human-Cost Reduction vs. AI Investment',
                  fontsize=13, fontweight='bold')
     ax.set_xlim(0, 10500)
     ax.invert_yaxis()
@@ -250,5 +250,5 @@ if __name__ == '__main__':
     fig4_phase_comparison()
     fig5_test_ratio()
     fig6_maturity_progression()
-    fig9_cost_benefit()
+    fig7_cost_benefit()
     print(f'\nAll figures saved to: {OUTPUT_DIR}')

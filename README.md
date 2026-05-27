@@ -26,7 +26,7 @@ docker run --rm \
 
 レポート内の図は事前にレンダリングした PNG (`docs/figs/*.png`) を画像参照する方式で運用しています。図のソースを変更した場合は以下の手順で再生成してください。
 
-#### Mermaid 図（図1, 2, 7, 8）
+#### Mermaid 図（図1, 2, 8, 9）
 
 ソースは `docs/figs/src/*.mmd` にあります。`mermaid-cli` の Docker イメージで PNG にレンダリングします。
 
@@ -39,7 +39,7 @@ for name in sdlc_workflow spec_kit_workflow variability_suppression value_creati
 done
 ```
 
-#### Matplotlib 図（図3, 4, 5, 6, 9）
+#### Matplotlib 図（図3, 4, 5, 6, 7）
 
 ソースは `scripts/generate_figures.py` です。Python は venv を使ってください。
 
