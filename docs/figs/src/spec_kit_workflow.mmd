@@ -1,0 +1,11 @@
+flowchart TD
+    A[1. Constitution<br/>品質憲章策定] --> B[2. Specify<br/>仕様策定]
+    B --> C[3. Plan<br/>実装計画]
+    C --> D[4. Tasks<br/>タスク生成]
+    D --> E[5. Implement<br/>実装]
+    E --> F[6. Report<br/>検証・報告]
+
+    B -.-> G[Clarify<br/>仕様の明確化]
+    G -.-> B
+    C -.-> H[Analyze<br/>整合性チェック]
+    H -.-> C

@@ -21,3 +21,31 @@ docker run --rm \
        --resource-path=docs \
        --pdf-engine=lualatex -V documentclass=ltjsarticle
 ```
+
+### Regenerate Figures
+
+レポート内の図は事前にレンダリングした PNG (`docs/figs/*.png`) を画像参照する方式で運用しています。図のソースを変更した場合は以下の手順で再生成してください。
+
+#### Mermaid 図（図1, 2, 7, 8）
+
+ソースは `docs/figs/src/*.mmd` にあります。`mermaid-cli` の Docker イメージで PNG にレンダリングします。
+
+```bash
+for name in sdlc_workflow spec_kit_workflow variability_suppression value_creation; do
+  docker run --rm -u $(id -u):$(id -g) \
+    -v "$(pwd)/docs/figs:/data" \
+    minlag/mermaid-cli \
+    -i "src/${name}.mmd" -o "${name}.png" -b transparent -s 2
+done
+```
+
+#### Matplotlib 図（図3, 4, 5, 6, 9）
+
+ソースは `scripts/generate_figures.py` です。Python は venv を使ってください。
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install matplotlib numpy  # 初回のみ
+python scripts/generate_figures.py
+```

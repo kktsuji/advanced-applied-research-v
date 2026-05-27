@@ -1,0 +1,13 @@
+flowchart LR
+    subgraph 問題
+        A[担当者A] -->|プロンプトA| C[AI]
+        B[担当者B] -->|プロンプトB| C
+        C --> D[ばらつきのある出力]
+    end
+
+    subgraph 対策
+        E[Constitution<br/>品質憲章] --> G[統一された<br/>コンテキスト]
+        F[docs/standards<br/>開発標準] --> G
+        G -->|全担当者共通| H[AI]
+        H --> I[一貫した出力]
+    end
